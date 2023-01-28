@@ -13,8 +13,34 @@ export default {
     {
       name: 'setting',
       title: '设置',
-      icon: 'user',
+      icon: 'user-circle',
       component: SettingsScreen,
+    },
+  ],
+  GameTab: [
+    {
+      title: 'Galgame区',
+      icon: 'home',
+    },
+    {
+      title: 'KRKR专区',
+      icon: 'phone',
+    },
+    {
+      title: 'RPG游戏',
+      icon: 'atom',
+    },
+    {
+      title: '游戏区',
+      icon: 'gamepad',
+    },
+    {
+      title: '本子区',
+      icon: 'gift',
+    },
+    {
+      title: '轻小说区',
+      icon: 'book',
     },
   ],
 };

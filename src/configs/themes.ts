@@ -3,7 +3,7 @@ import {createTheme} from '@rneui/themed';
 const theme = createTheme({
   components: {
     Icon: {
-      type: 'ant-design',
+      type: 'font-awesome-5',
     },
   },
 });

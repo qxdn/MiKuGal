@@ -3,7 +3,7 @@ declare namespace API {
     code: number;
     msg: string;
     obj: T;
-    wrapper?: number;
+    wrapper?: number; // obj为list时服务器总含量
   };
   type GameListItem = {
     game_id: number; //游戏id
@@ -14,5 +14,13 @@ declare namespace API {
     game_label: string; // 类型 ,分隔
     game_lys: number; // 留言数量
     game_name: string; //游戏名
+  };
+  type Sign = {
+    token: string; // X-Auth-Token
+    nickname: string; // 昵称
+    vstatus: number; // vip status maybe boolean
+    qs: number; // 不知道是什么 可能是指过了两个月
+    ts: string; // 头像路径 不含只有文件名
+    jf: number; // 这个应该是指硬币
   };
 }

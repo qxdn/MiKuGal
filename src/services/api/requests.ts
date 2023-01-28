@@ -17,7 +17,10 @@ const getRequestMethod = () => {
   baseMainInstance.interceptors.response.use(response => {
     let data: API.Response<any> = response.data;
     if (data.code === 0) {
-      return data.obj;
+      if (data.wrapper) {
+        return {obj: data.obj, wrapper: data.wrapper};
+      }
+      return {obj: data.obj};
     }
     return null;
   });
@@ -30,7 +33,7 @@ const request = (url: string, options?: {[key: string]: any}) => {
     url: url,
     ...(options || {}),
   };
-  return requestMethod(options);
+  return requestMethod<string, any>(options);
 };
 
 export {request};

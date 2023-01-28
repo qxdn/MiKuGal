@@ -19,3 +19,26 @@ export async function getGameList(
     ...(options || {}),
   });
 }
+
+/**
+ *
+ * @param params 登陆
+ */
+export async function sign(
+  email: string,
+  password: string,
+  options?: {[key: string]: any},
+) {
+  // TODO: password md5加密
+  return await request('/sign', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    data: {
+      email: email,
+      password: password,
+    },
+    ...(options || {}),
+  });
+}
