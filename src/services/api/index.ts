@@ -1,4 +1,5 @@
 import {request} from './requests';
+import Settings from '@src/configs/defaultSettings';
 
 /**
  *
@@ -8,12 +9,12 @@ export async function getGameList(
   page: number,
   options?: {[key: string]: any},
 ) {
-  return await request('/gameLists', {
+  return await request<API.PageWrapper<API.GameListItem[]>>('/gameLists', {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      Accept: 'application/json,text/plain,*/*',
     },
-    data: {
+    params: {
       yema: page,
     },
     ...(options || {}),
@@ -30,7 +31,7 @@ export async function sign(
   options?: {[key: string]: any},
 ) {
   // TODO: password md5加密
-  return await request('/sign', {
+  return await request<API.Sign>('/sign', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -41,4 +42,9 @@ export async function sign(
     },
     ...(options || {}),
   });
+}
+
+export function getImageUrl(path: string): string {
+  let imageUrl: string = Settings.network.main.imageUrl;
+  return imageUrl + path;
 }

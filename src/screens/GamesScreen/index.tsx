@@ -1,6 +1,8 @@
 import React from 'react';
-import {Icon, Tab, TabView, Text} from '@rneui/themed';
+import {Tab, TabView} from '@rneui/themed';
+import GameLists from '@components/GameLists/index';
 import router from '@configs/router';
+import styles from './styles';
 
 const GamesScreen = () => {
   const [index, setIndex] = React.useState<number>(0);
@@ -13,12 +15,12 @@ const GamesScreen = () => {
       <Tab.Item
         key={i}
         title={route.title}
-        icon={<Icon name={route.icon} />}
+        //icon={<Icon name={route.icon} />}
       />,
     );
     tabViewItems.push(
-      <TabView.Item key={i}>
-        <Text>{route.title}</Text>
+      <TabView.Item key={i} style={styles.TabViewItem}>
+        <GameLists />
       </TabView.Item>,
     );
   }

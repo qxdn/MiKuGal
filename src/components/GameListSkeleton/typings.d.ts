@@ -1,0 +1,1 @@
+type GameListSkeletonProps = {repeat: number};

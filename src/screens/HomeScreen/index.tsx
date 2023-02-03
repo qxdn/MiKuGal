@@ -1,10 +1,25 @@
 import React, {ReactNode} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from '@rneui/themed';
-import router from '@configs/router';
+import GamesScreen from '../GamesScreen';
+import SettingsScreen from '../SettingsScreen';
+
+const HomeTab = [
+  {
+    name: 'game',
+    title: '游戏',
+    icon: 'home',
+    component: GamesScreen,
+  },
+  {
+    name: 'setting',
+    title: '设置',
+    icon: 'user-circle',
+    component: SettingsScreen,
+  },
+];
 
 const Tab = createBottomTabNavigator();
-
 // tabBar icon setting
 const TabBarIcon = (icon: string) => {
   return (props: {
@@ -17,7 +32,7 @@ const TabBarIcon = (icon: string) => {
 };
 
 const HomeScreen = (): JSX.Element => {
-  let homeRouter = router.HomeTab;
+  let homeRouter = HomeTab;
   const screens = [];
 
   for (let index in homeRouter) {
@@ -31,7 +46,6 @@ const HomeScreen = (): JSX.Element => {
       />,
     );
   }
-
   const ScreenOptions = () => {
     return {
       headerShown: false,

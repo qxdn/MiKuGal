@@ -3,7 +3,11 @@ declare namespace API {
     code: number;
     msg: string;
     obj: T;
-    wrapper?: number; // obj为list时服务器总含量
+    wrap?: number; // obj为list时服务器总含量
+  };
+  type PageWrapper<T> = {
+    obj: T;
+    wrap: number;
   };
   type GameListItem = {
     game_id: number; //游戏id
