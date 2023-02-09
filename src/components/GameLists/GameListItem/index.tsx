@@ -7,16 +7,37 @@ import {
   View,
 } from 'react-native';
 import styles from './styles';
-import {Image, ListItem, Text} from '@rneui/themed';
-import {getImageUrl} from '@src/services/api';
+import {Icon, Image, ListItem, Text, Card} from '@rneui/themed';
+import {gameLabelConvert, getImageUrl} from '@src/services/api';
 import logger from '@src/services/log';
 import {color} from '@rneui/base';
 
-const GameItem = ({data}: {data: API.GameListItem}) => {
+const GameLabel = ({
+  text,
+  iconName,
+}: {
+  text: string | number;
+  iconName: string;
+}) => {
+  return (
+    <View style={styles.gameLabel}>
+      <Icon
+        name={iconName}
+        size={styles.gameLabelText.fontSize}
+        color={styles.gameLabelText.color}
+      />
+      <Text style={styles.gameLabelText}>{text}</Text>
+    </View>
+  );
+};
+
+const GameItem = ({data}: GameItemProps) => {
   // 转换图片url
   let imageUrl = getImageUrl(data.game_img);
   // 转换时间
   let createTime = new Date(data.game_create_time);
+  // 标签
+  let labels = gameLabelConvert(data.game_label);
   return (
     <ListItem>
       <TouchableHighlight>
@@ -29,15 +50,36 @@ const GameItem = ({data}: {data: API.GameListItem}) => {
               <Text style={styles.dataClassDay}>{createTime.getDay() + 1}</Text>
             </View>
             <View style={styles.articleContainer}>
-              <ListItem.Title style={{marginTop: 40}}>
-                <Text h4>{data.game_name}</Text>
+              <ListItem.Title style={{marginTop: 40, textAlign: 'center'}}>
+                <Card.Title h4 style={[styles.articleTitle]}>
+                  {data.game_name}
+                </Card.Title>
               </ListItem.Title>
-              <ListItem.Subtitle>{data.game_label}</ListItem.Subtitle>
-              <Image
-                source={{uri: imageUrl}}
-                containerStyle={{aspectRatio: 4 / 3, width: '100%'}}
-                PlaceholderContent={<ActivityIndicator />}
-              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                }}>
+                <GameLabel text={labels.join(',')} iconName="tags" />
+                <GameLabel text={data.game_count} iconName="eye" />
+                <GameLabel text={data.game_lys} iconName="comment-dots" />
+              </View>
+              <ListItem.Content>
+                <View>
+                  <Image
+                    resizeMode="center"
+                    source={{uri: imageUrl}}
+                    containerStyle={{
+                      aspectRatio: 1,
+                      width: '100%',
+                      flex: 1,
+                      marginVertical: -60,
+                    }}
+                    transition
+                    PlaceholderContent={<ActivityIndicator />}
+                  />
+                </View>
+              </ListItem.Content>
             </View>
           </View>
         </TouchableNativeFeedback>
