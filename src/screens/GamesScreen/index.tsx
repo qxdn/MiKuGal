@@ -15,12 +15,12 @@ const GamesScreen = () => {
       <Tab.Item
         key={i}
         title={route.title}
-        //icon={<Icon name={route.icon} />}
+        //icon={<Icon name={route.icon} />} 不显示icon更好看
       />,
     );
     tabViewItems.push(
       <TabView.Item key={i} style={styles.TabViewItem}>
-        <GameLists />
+        <GameLists gameType={route.type} />
       </TabView.Item>,
     );
   }

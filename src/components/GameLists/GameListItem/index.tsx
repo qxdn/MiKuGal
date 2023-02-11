@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  FlatList,
   TouchableHighlight,
   TouchableNativeFeedback,
   ActivityIndicator,
@@ -10,7 +9,6 @@ import styles from './styles';
 import {Icon, Image, ListItem, Text, Card} from '@rneui/themed';
 import {gameLabelConvert, getImageUrl} from '@src/services/api';
 import logger from '@src/services/log';
-import {color} from '@rneui/base';
 
 const GameLabel = ({
   text,
@@ -38,70 +36,57 @@ const GameItem = ({data}: GameItemProps) => {
   let createTime = new Date(data.game_create_time);
   // 标签
   let labels = gameLabelConvert(data.game_label);
-  return (
-    <ListItem>
-      <TouchableHighlight>
-        <TouchableNativeFeedback>
-          <View style={[styles.article, styles.articleBody]}>
-            <View style={styles.dataArticle}>
-              <Text style={styles.dataClassMonth}>
-                {createTime.getMonth() + 1 + '月'}
-              </Text>
-              <Text style={styles.dataClassDay}>{createTime.getDay() + 1}</Text>
-            </View>
-            <View style={styles.articleContainer}>
-              <ListItem.Title style={{marginTop: 40, textAlign: 'center'}}>
-                <Card.Title h4 style={[styles.articleTitle]}>
-                  {data.game_name}
-                </Card.Title>
-              </ListItem.Title>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-evenly',
-                }}>
-                <GameLabel text={labels.join(',')} iconName="tags" />
-                <GameLabel text={data.game_count} iconName="eye" />
-                <GameLabel text={data.game_lys} iconName="comment-dots" />
+
+  const renderData = () => {
+    return (
+      <ListItem>
+        <TouchableHighlight>
+          <TouchableNativeFeedback>
+            <View style={[styles.article, styles.articleBody]}>
+              <View style={styles.dataArticle}>
+                <Text style={styles.dataClassMonth}>
+                  {createTime.getMonth() + 1 + '月'}
+                </Text>
+                <Text style={styles.dataClassDay}>
+                  {createTime.getDay() + 1}
+                </Text>
               </View>
-              <ListItem.Content>
-                <View>
-                  <Image
-                    resizeMode="center"
-                    source={{uri: imageUrl}}
-                    containerStyle={{
-                      aspectRatio: 1,
-                      width: '100%',
-                      flex: 1,
-                      marginVertical: -60,
-                    }}
-                    transition
-                    PlaceholderContent={<ActivityIndicator />}
-                  />
+              <View style={styles.articleContainer}>
+                <ListItem.Title style={{marginTop: 40, textAlign: 'center'}}>
+                  <Card.Title h4 style={[styles.articleTitle]}>
+                    {data.game_name}
+                  </Card.Title>
+                </ListItem.Title>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                    marginTop: 15,
+                  }}>
+                  <GameLabel text={labels.join(',')} iconName="tags" />
+                  <GameLabel text={data.game_count} iconName="eye" />
+                  <GameLabel text={data.game_lys} iconName="comment-dots" />
                 </View>
-              </ListItem.Content>
+                <ListItem.Content>
+                  <View>
+                    <Image
+                      resizeMode="center"
+                      source={{uri: imageUrl}}
+                      containerStyle={styles.imageContainerStyle}
+                      transition
+                      //PlaceholderContent={<ActivityIndicator />} // placeholder要改
+                    />
+                  </View>
+                </ListItem.Content>
+              </View>
             </View>
-          </View>
-        </TouchableNativeFeedback>
-      </TouchableHighlight>
-    </ListItem>
-  );
+          </TouchableNativeFeedback>
+        </TouchableHighlight>
+      </ListItem>
+    );
+  };
+
+  return renderData();
 };
 
-const GameListItem = ({
-  data,
-  wrap,
-}: {
-  data: API.GameListItem[];
-  wrap: number;
-}) => {
-  return (
-    <FlatList
-      data={data}
-      renderItem={({item}) => <GameItem data={item} />}
-      keyExtractor={item => item.game_id.toString()}
-    />
-  );
-};
-
-export default GameListItem;
+export default GameItem;

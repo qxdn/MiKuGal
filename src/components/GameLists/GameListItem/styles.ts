@@ -79,6 +79,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 12,
   },
+  imageContainerStyle: {
+    aspectRatio: 1,
+    width: '100%',
+    flex: 1,
+    marginTop: '-10%',
+    marginBottom: '-10%',
+  },
 });
 
 export default styles;

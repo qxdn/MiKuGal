@@ -76,4 +76,47 @@ declare namespace API {
   type OneDriveUrl = {
     src: string; // 以,分隔
   };
+
+  type GameDetailImage = {
+    img_id: number;
+    img_url: string;
+    game_id: number;
+  };
+
+  type GameDetailCount = {
+    game_id: number;
+    game_name: string;
+    game_introduce: string;
+    game_src: string; // null
+    game_pwd: string; // 分割url ','
+    game_beizhu: string; // 游戏链接备注
+    game_create_time: string; // '2022-03-29'
+    game_count: number; //
+    game_label: string; // 数字 需要转换
+    game_img: string; // 需要拼接url
+    game_lys: number; // 留言数
+    vip_src: string; // null
+    vip_pwd: string; // null
+    baidu_src: string; // null 可能购买后会变
+    other_src: string; // null
+    other_pwd: string; // null
+    isvip: boolean;
+  };
+
+  type GameDetail = {
+    count: GameDetailCount;
+    countss: number; // 未知
+    img: GameDetailImage[];
+  };
+
+  type GameDetailComment = {
+    id: number; // 这个应该是评论id
+    game_userId: string; // userid
+    game_name: string; // user name
+    game_img: string; // 头像 需要转换
+    game_content: string; // 评论内容
+    game_create_time: string; // '2023-02-10 22:22:20'
+    game_id: string; // 游戏id
+    game_userld: string; // 未知
+  };
 }

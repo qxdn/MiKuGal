@@ -1,5 +1,6 @@
 import {request} from './requests';
 import Settings from '@src/configs/defaultSettings';
+import GameType from '@src/enums/gametype';
 import {Md5} from 'ts-md5';
 
 /**
@@ -8,9 +9,10 @@ import {Md5} from 'ts-md5';
  */
 export async function getGameList(
   page: number,
+  type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
 ) {
-  return await request<API.PageWrapper<API.GameListItem[]>>('/gameLists', {
+  return await request<API.PageWrapper<API.GameListItem[]>>(type.list, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -35,7 +37,8 @@ export async function sign(
   return await request<API.Sign>('/sign', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      Accept: 'application/json,text/plain,*/*',
+      ContentType: 'application/x-www-form-urlencoded',
     },
     data: {
       email: email,
@@ -59,14 +62,15 @@ export async function getGlobalGameComment(options?: {[key: string]: any}) {
 }
 
 /**
- * 获取最近更细的游戏记录
+ * 获取最近更新的游戏补丁记录
  * @param label
  */
 export async function getLastUpdateGamePatch(
   label: string,
+  type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
 ) {
-  return await request<API.LastUpdateGamePatch[]>('/updatagamehx', {
+  return await request<API.LastUpdateGamePatch[]>(type.label, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -82,8 +86,11 @@ export async function getLastUpdateGamePatch(
  * 获取网页右侧的留言
  * @param params
  */
-export async function getWebGameComment(options?: {[key: string]: any}) {
-  return await request<API.WebGameComment[]>('/updatagamehx', {
+export async function getWebGameComment(
+  type: GameTypeEnum = GameType.Galgame,
+  options?: {[key: string]: any},
+) {
+  return await request<API.WebGameComment[]>(type.webComment, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -97,8 +104,11 @@ export async function getWebGameComment(options?: {[key: string]: any}) {
  * @param options
  * @returns
  */
-export async function getRandomGame(options?: {[key: string]: any}) {
-  return await request<API.RandomGame[]>('/randgame', {
+export async function getRandomGame(
+  type: GameTypeEnum = GameType.Galgame,
+  options?: {[key: string]: any},
+) {
+  return await request<API.RandomGame[]>(type.random, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -112,8 +122,11 @@ export async function getRandomGame(options?: {[key: string]: any}) {
  * @param options
  * @returns
  */
-export async function getTopGame(options?: {[key: string]: any}) {
-  return await request<API.RandomGame[]>('/topgame', {
+export async function getTopGame(
+  type: GameTypeEnum = GameType.Galgame,
+  options?: {[key: string]: any},
+) {
+  return await request<API.RandomGame[]>(type.topGame, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -146,20 +159,68 @@ export async function getVIP(options?: {[key: string]: any}) {
  */
 export async function getDownloadLink(
   id: number,
-  type: string,
+  type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
 ) {
   return await request<API.OneDriveUrl>('/down', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      Accept: 'application/json,text/plain,*/*',
+      ContentType: 'application/x-www-form-urlencoded',
     },
     data: {
       id: id,
-      type: type,
+      type: type.downloadType,
     },
     ...(options || {}),
   });
+}
+
+export async function getGameDetail(
+  id: number,
+  type: GameTypeEnum = GameType.Galgame,
+  options?: {[key: string]: any},
+) {
+  return await request<API.GameDetail>(type.details, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json,text/plain,*/*',
+    },
+    params: {
+      id: id,
+    },
+    ...(options || {}),
+  });
+}
+
+/**
+ * 获取游戏评论
+ * @param id
+ * @param type
+ * @param yema
+ * @param options
+ * @returns
+ */
+export async function getGameDetailComment(
+  id: number,
+  type: GameTypeEnum = GameType.Galgame,
+  yema: number = 0,
+  options?: {[key: string]: any},
+) {
+  return await request<API.PageWrapper<API.GameDetailComment[]>>(
+    type.detailComment,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json,text/plain,*/*',
+      },
+      params: {
+        id: id,
+        yema: yema,
+      },
+      ...(options || {}),
+    },
+  );
 }
 
 /**
@@ -170,6 +231,16 @@ export async function getDownloadLink(
 export function getImageUrl(path: string): string {
   let imageUrl: string = Settings.network.main.imageUrl;
   return imageUrl + path;
+}
+
+/**
+ * 转换头像
+ * @param path
+ * @returns
+ */
+export function getAvatarUrl(path: string): string {
+  let avatarUrl: string = Settings.network.main.url + '/users/' + path;
+  return avatarUrl;
 }
 
 /**
