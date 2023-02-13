@@ -32,21 +32,16 @@ const Note: React.FunctionComponent<NoteProps> = ({
   type,
   icon,
   title,
+  titleSize,
   childStyles,
   ...props
 }) => {
   const {color, backGroundColor} = convertColor(type);
+  if (!titleSize) {
+    titleSize = styles.titleSize.fontSize;
+  }
 
-  const renderChild = (
-    child?:
-      | string
-      | number
-      | boolean
-      | JSX.Element
-      | React.ReactFragment
-      | null
-      | undefined,
-  ) => {
+  const renderChild = (child?) => {
     if (isString(child)) {
       return <Text style={[{textAlign: 'center'}, childStyles]}>{child}</Text>;
     } else {
@@ -63,9 +58,14 @@ const Note: React.FunctionComponent<NoteProps> = ({
       ]}>
       <View>
         <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-          {icon && <Icon name={icon} size={24} color={color} />}
+          {icon && <Icon name={icon} size={titleSize} color={color} />}
           {title && (
-            <Text h4 style={[{color: color}, {marginLeft: 10}]}>
+            <Text
+              style={[
+                styles.titleBase,
+                styles.titleSize,
+                {color: color, fontSize: titleSize},
+              ]}>
               {title}
             </Text>
           )}

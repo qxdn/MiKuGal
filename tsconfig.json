@@ -7,7 +7,8 @@
       "@screens/*": ["./src/screens/*"],
       "@configs/*": ["./src/configs/*"],
       "@components/*": ["./src/components/*"],
-      "@services/*": ["./src/services/*"]
+      "@services/*": ["./src/services/*"],
+      "@reducers/*": ["./src/reducers/*"]
     }
   }
 }

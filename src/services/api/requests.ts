@@ -15,6 +15,7 @@ const getRequestMethod = () => {
   baseMainInstance = axios.create({
     baseURL: baseMainConfig.url,
     timeout: baseMainConfig.timeout,
+    withCredentials: true,
   });
   baseMainInstance.interceptors.response.use(
     response => {
@@ -58,7 +59,7 @@ const request = async <T = any>(
     // code=5 大概率是这个，主要为福利区、本子区、轻小说区等位置
     logger.debug('未登录');
   } else {
-    Toast.show({type: 'error', text1: '请求数据失败'});
+    Toast.show({type: 'error', text1: '请求数据失败', text2: data.msg});
   }
   return undefined;
 };

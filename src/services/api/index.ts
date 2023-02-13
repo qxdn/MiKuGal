@@ -2,6 +2,8 @@ import {request} from './requests';
 import Settings from '@src/configs/defaultSettings';
 import GameType from '@src/enums/gametype';
 import {Md5} from 'ts-md5';
+import qs from 'qs';
+import logger from '../log';
 
 /**
  *
@@ -33,17 +35,16 @@ export async function sign(
   password: string,
   options?: {[key: string]: any},
 ) {
-  // TODO: password md5加密
   return await request<API.Sign>('/sign', {
     method: 'POST',
     headers: {
       Accept: 'application/json,text/plain,*/*',
       ContentType: 'application/x-www-form-urlencoded',
     },
-    data: {
+    data: qs.stringify({
       email: email,
-      password: Md5.hashStr(password),
-    },
+      password: Md5.hashStr(password), // password md5加密
+    }),
     ...(options || {}),
   });
 }
@@ -168,10 +169,10 @@ export async function getDownloadLink(
       Accept: 'application/json,text/plain,*/*',
       ContentType: 'application/x-www-form-urlencoded',
     },
-    data: {
+    data: qs.stringify({
       id: id,
       type: type.downloadType,
-    },
+    }),
     ...(options || {}),
   });
 }

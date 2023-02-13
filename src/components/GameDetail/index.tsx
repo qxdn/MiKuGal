@@ -10,6 +10,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import GameLabel from '@components/GameLabel';
 import Note from '@components/Note';
 import RenderHTML from 'react-native-render-html';
+import GameLink from '@components/GameLink';
 
 /**
  * 游戏详情页面
@@ -37,6 +38,10 @@ const GameDetail: React.FunctionComponent<GameDetailProps> = ({id, type}) => {
     loadData();
   }, [id, type]);
 
+  /**
+   * zoom image view
+   * @returns
+   */
   const getImageViewUrls = () => {
     const imgs = [];
     for (let img of detail?.img) {
@@ -44,6 +49,10 @@ const GameDetail: React.FunctionComponent<GameDetailProps> = ({id, type}) => {
     }
     return imgs;
   };
+  /**
+   * card image
+   * @returns
+   */
   const getImageCardItem = () => {
     const imgs = [];
     for (let index in detail?.img) {
@@ -87,12 +96,7 @@ const GameDetail: React.FunctionComponent<GameDetailProps> = ({id, type}) => {
           <GameLabel text={detail?.count.game_count} iconName="eye" />
         </View>
         <Card.Divider />
-        <Note type="success" icon="lightbulb" title={'游戏介绍'}>
-          <RenderHTML
-            contentWidth={width}
-            source={{html: detail?.count.game_introduce}}
-          />
-        </Note>
+        <Note type="info" title={'游戏截图'} />
         {getImageCardItem()}
         <Modal visible={showModal} transparent={true}>
           <ImageViewer
@@ -103,6 +107,20 @@ const GameDetail: React.FunctionComponent<GameDetailProps> = ({id, type}) => {
             }}
           />
         </Modal>
+        <Note type="success" icon="lightbulb" title={'游戏介绍'}>
+          <RenderHTML
+            contentWidth={width}
+            source={{html: detail?.count.game_introduce}}
+          />
+        </Note>
+        <Card.Divider />
+        <GameLink
+          title="Onedrive链接"
+          id={id}
+          type={type}
+          note={detail?.count.game_beizhu}
+          split={detail?.count.game_pwd}
+        />
       </Card>
     </ScrollView>
   );

@@ -13,7 +13,7 @@ const HomeTab = [
   },
   {
     name: 'setting',
-    title: '设置',
+    title: '个人中心',
     icon: 'user-circle',
     component: SettingsScreen,
   },

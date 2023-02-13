@@ -1,6 +1,4 @@
 import {StyleSheet} from 'react-native';
-export const HEIGHT = 60;
-export const WIDTH = 340;
 export const BORDER_RADIUS = 6;
 export const BORDER_LEFT_WIDTH = 5;
 export const styles = StyleSheet.create({
@@ -18,5 +16,12 @@ export const styles = StyleSheet.create({
   leadingBorder: {
     borderLeftWidth: BORDER_LEFT_WIDTH,
     borderLeftColor: '#D8D8D8',
+  },
+  titleSize: {
+    fontSize: 18,
+  },
+  titleBase: {
+    marginLeft: 10,
+    fontWeight: 'bold',
   },
 });
