@@ -4,9 +4,9 @@ import logger from '@src/services/log';
 import React, {useEffect, useState} from 'react';
 import {FlatList, View} from 'react-native';
 import GameListSkeleton from '../GameListSkeleton';
-import GameItem from './GameListItem';
+import GameListItem from '@components/GameListItem';
 
-const GameLists = ({gameType}: GameListProps) => {
+const GameLists: React.FunctionComponent<GameListProps> = ({gameType}) => {
   const [page, setPage] = useState<number>(0);
   const [maxPage, setMaxPage] = useState<number>(-1);
   const [search, setSearch] = useState<string>();
@@ -76,7 +76,7 @@ const GameLists = ({gameType}: GameListProps) => {
       />
       <FlatList
         data={gameList}
-        renderItem={({item}) => <GameItem data={item} />}
+        renderItem={({item}) => <GameListItem data={item} type={gameType} />}
         keyExtractor={item => item.game_id.toString()}
         refreshing={loading}
         onRefresh={() => {

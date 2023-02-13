@@ -34,7 +34,7 @@ const request = async <T = any>(
   url: string,
   options?: {[key: string]: any},
   keepResponse: boolean = false,
-): Promise<T | API.Response<T> | null | Record<string, any>> => {
+): Promise<T | API.Response<T> | undefined | API.PageWrapper<T>> => {
   let requestInstance = getRequestMethod();
   options = {
     url: url,
@@ -60,7 +60,7 @@ const request = async <T = any>(
   } else {
     Toast.show({type: 'error', text1: '请求数据失败'});
   }
-  return null;
+  return undefined;
 };
 
 export {request};
