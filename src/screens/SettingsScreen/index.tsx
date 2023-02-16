@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button, Card, Input, Icon, Text} from '@rneui/themed';
 import {View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {selectUser} from '@src/reducers/UserReducer';
 import LoginForm from '@src/components/LoginForm';
+import UserSettings from '@src/components/UserSettings';
 
 const SettingsScreen = () => {
   const user = useSelector(selectUser);
@@ -13,7 +13,7 @@ const SettingsScreen = () => {
   } else {
     return (
       <View>
-        <Button>{'aaa'}</Button>
+        <UserSettings />
       </View>
     );
   }

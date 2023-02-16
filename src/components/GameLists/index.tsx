@@ -61,6 +61,14 @@ const GameLists: React.FunctionComponent<GameListProps> = ({gameType}) => {
     setPage(page + 1);
   };
 
+  const refreshing = () => {
+    if ( 0 === page) {
+      loadData();
+    } else {
+      setPage(0);
+    }
+  };
+
   return (
     <View>
       <SearchBar
@@ -79,9 +87,7 @@ const GameLists: React.FunctionComponent<GameListProps> = ({gameType}) => {
         renderItem={({item}) => <GameListItem data={item} type={gameType} />}
         keyExtractor={item => item.game_id.toString()}
         refreshing={loading}
-        onRefresh={() => {
-          setPage(0);
-        }}
+        onRefresh={refreshing}
         onEndReached={listEndReach}
       />
     </View>

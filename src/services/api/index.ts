@@ -4,6 +4,26 @@ import GameType from '@src/enums/gametype';
 import {Md5} from 'ts-md5';
 import qs from 'qs';
 import logger from '../log';
+import {getToken, setLoginUser, setToken} from '../token';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
+
+export const addCoin = async (options?: {[key: string]: any}) => {
+  let data = await request<API.Response<object>>(
+    '/addJf',
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json,text/plain,*/*',
+      },
+      ...(options || {}),
+    },
+    true,
+  );
+  if (0 === data.code) {
+    Toast.show({type: 'success', text1: '每日登陆，增加金币'});
+  }
+  return;
+};
 
 /**
  *
@@ -14,10 +34,12 @@ export async function getGameList(
   type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
 ) {
+  addCoin();
   return await request<API.PageWrapper<API.GameListItem[]>>(type.list, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
+      //'X-Auth-Token': await getToken(),
     },
     params: {
       yema: page,
@@ -35,7 +57,7 @@ export async function sign(
   password: string,
   options?: {[key: string]: any},
 ) {
-  return await request<API.Sign>('/sign', {
+  let data = await request<API.Sign>('/sign', {
     method: 'POST',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -47,6 +69,17 @@ export async function sign(
     }),
     ...(options || {}),
   });
+  if (data) {
+    logger.log('set data');
+    await setToken(data.token);
+    await setLoginUser({
+      nickname: data.nickname,
+      avatar: data.ts,
+      token: data.token,
+      coins: data.jf,
+    });
+  }
+  return data;
 }
 
 /**

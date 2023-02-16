@@ -22,7 +22,7 @@ declare namespace API {
   type Sign = {
     token: string; // X-Auth-Token
     nickname: string; // 昵称
-    vstatus: number; // vip status maybe boolean
+    vstatus: number; // vip status 
     qs: number; // 不知道是什么 可能是指过了两个月
     ts: string; // 头像路径 不含只有文件名
     jf: number; // 这个应该是指硬币
@@ -71,6 +71,10 @@ declare namespace API {
     mos: number; // 时间戳 ms utc+8
     isCheck: boolean; // 这个是什么的check? 可能是手机号
     jf: number; // 这个应该是金币
+    qs?: number; // 不知道是什么 vip才有
+    start?: string; //  vip开始时间 example 2023-02-16 20:23:55
+    end?: string; // vip结束时间 example 2023-03-16 20:23:55
+    vstatus?: boolean; // vip
   };
 
   type OneDriveUrl = {

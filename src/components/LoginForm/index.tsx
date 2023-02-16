@@ -13,8 +13,15 @@ const LoginForm: React.FC = () => {
 
   const submit = async () => {
     let result = await sign(email, password);
-    logger.log(result);
-    dispatch(login(result));
+    dispatch(
+      login({
+        nickname: result.nickname,
+        avatar: result.ts,
+        coins: result.jf,
+        token: result.token,
+        vip: result.vstatus,
+      }),
+    );
   };
 
   return (

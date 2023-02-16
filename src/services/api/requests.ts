@@ -2,6 +2,7 @@ import Settings from '@configs/defaultSettings';
 import axios, {AxiosInstance} from 'axios';
 import logger from '@services/log';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import {getToken, setCookieExpireTime} from '../token';
 
 // 主站设置 TODO: 后面可以改成存储
 let baseMainConfig = Settings.network.main; // 主站
@@ -19,6 +20,9 @@ const getRequestMethod = () => {
   });
   baseMainInstance.interceptors.response.use(
     response => {
+      if (response.headers['set-cookie']) {
+        setCookieExpireTime(response.headers['set-cookie']);
+      }
       let data = response.data;
       return data;
     },
@@ -40,6 +44,10 @@ const request = async <T = any>(
   options = {
     url: url,
     ...(options || {}),
+    headers: {
+      'X-Auth-Token': await getToken(),
+      ...(options || {}).headers,
+    },
   };
   let data: API.Response<T> = await requestInstance.request<
     any,

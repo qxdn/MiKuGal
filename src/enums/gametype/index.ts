@@ -11,7 +11,7 @@ const GameType = {
     random: '/randgame',
     topGame: '/topgame',
     details: '/details',
-    downloadType: 'galgame',
+    downloadType: 'game',
     detailComment: '/gamebook',
   }),
   KrKr: gameType({

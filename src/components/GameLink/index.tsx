@@ -35,6 +35,7 @@ const GameLink: React.FC<GameLinkProps> = ({
   }
   // TODO: onPress
   const onPress = async () => {
+    logger.log('request link');
     const linkSrc: API.OneDriveUrl = await getDownloadLink(id, type);
     const links: string[] = linkSrc.src.split(split);
     // TODO: navigation

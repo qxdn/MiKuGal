@@ -4,7 +4,7 @@ const Settings: {[key: string]: any} = {
     main: {
       url: 'https://www.fufugal.com',
       imageUrl: 'https://img.llgal.xyz',
-      timeout: 1000,
+      timeout: 3000,
     },
   },
 };

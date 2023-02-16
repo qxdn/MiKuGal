@@ -1,8 +1,11 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from '@rneui/themed';
 import GamesScreen from '../GamesScreen';
 import SettingsScreen from '../SettingsScreen';
+import {getLoginUser} from '@src/services/token';
+import {useDispatch} from 'react-redux';
+import {login} from '@src/reducers/UserReducer';
 
 const HomeTab = [
   {
@@ -32,6 +35,17 @@ const TabBarIcon = (icon: string) => {
 };
 
 const HomeScreen = (): JSX.Element => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    async function getUser() {
+      let user = await getLoginUser();
+      if (user) {
+        dispatch(login(user));
+      }
+    }
+    getUser();
+  }, [dispatch]);
+
   let homeRouter = HomeTab;
   const screens = [];
 
