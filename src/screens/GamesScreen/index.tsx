@@ -1,6 +1,6 @@
 import React from 'react';
 import {Tab, TabView} from '@rneui/themed';
-import GameLists from '@components/GameLists/index';
+import GameListsScreen from '../GameListScreen';
 import router from '@configs/router';
 import styles from './styles';
 import {useSelector} from 'react-redux';
@@ -24,7 +24,7 @@ const GamesScreen = () => {
       );
       tabViewItems.push(
         <TabView.Item key={i} style={styles.TabViewItem}>
-          <GameLists gameType={route.type} />
+          <GameListsScreen gameType={route.type} />
         </TabView.Item>,
       );
     }
