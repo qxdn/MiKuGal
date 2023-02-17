@@ -4,6 +4,7 @@ function gameType(props: gameTypeProps): GameTypeEnum {
 
 const GameType = {
   Galgame: gameType({
+    name: 'Galgame',
     list: '/gameLists',
     label: 'galgame',
     webComment: '/getliuyan',
@@ -14,8 +15,10 @@ const GameType = {
     downloadType: 'game',
     detailComment: '/gamebook',
     search: '/so',
+    vip: false,
   }),
   KrKr: gameType({
+    name: 'KrKr',
     list: '/krkrGameLists',
     label: 'krkr',
     webComment: '/krkrGetliuyan',
@@ -26,8 +29,10 @@ const GameType = {
     downloadType: 'krkr',
     detailComment: '/krkrGamebook',
     search: '/krkrSo',
+    vip: false,
   }),
   RPG: gameType({
+    name: 'RPG',
     list: '/rpgGameLists',
     label: 'rpg',
     webComment: '/rpgGetliuyan',
@@ -38,8 +43,10 @@ const GameType = {
     downloadType: 'sstm',
     detailComment: '/rpgGamebook',
     search: '/rpgSo',
+    vip: false,
   }),
   VR: gameType({
+    name: '福利',
     list: '/vrLists',
     label: '3d',
     webComment: '/vrGetliuyan',
@@ -50,8 +57,10 @@ const GameType = {
     downloadType: 'vr',
     detailComment: 'vrGamebook',
     search: '/vrSo',
+    vip: true,
   }),
   EX: gameType({
+    name: '本子',
     list: '/exLists',
     label: 'ex',
     webComment: '/exGetliuyan',
@@ -62,8 +71,10 @@ const GameType = {
     downloadType: 'ex',
     detailComment: '/exGamebook',
     search: '/exSo',
+    vip: true,
   }),
   Book: gameType({
+    name: '轻小说',
     list: '/bookLists',
     label: 'book',
     webComment: '/bookGetliuyan',
@@ -74,7 +85,17 @@ const GameType = {
     downloadType: 'book',
     detailComment: '/bookGamebook',
     search: '/bookSo',
+    vip: true,
   }),
 } as const;
+
+export const AllGameTypes = [
+  GameType.Galgame,
+  GameType.KrKr,
+  GameType.RPG,
+  GameType.VR,
+  GameType.EX,
+  GameType.Book,
+];
 
 export default GameType;

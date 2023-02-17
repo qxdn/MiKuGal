@@ -61,7 +61,8 @@ const GameDetail: React.FunctionComponent<GameDetailProps> = ({id, type}) => {
         <Card.Image
           source={{uri: getImageUrl(img.img_url)}}
           onPress={() => {
-            setImageViewIndex(index), setShowModal(true);
+            setImageViewIndex(Number.parseInt(index, 10));
+            setShowModal(true);
           }}
           key={img.img_id}
           style={{marginVertical: '5%'}}

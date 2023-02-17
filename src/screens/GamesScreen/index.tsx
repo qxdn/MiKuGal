@@ -5,12 +5,13 @@ import router from '@configs/router';
 import styles from './styles';
 import {useSelector} from 'react-redux';
 import {selectUser} from '@src/reducers/UserReducer';
-import GameType from '@src/enums/gametype';
+import {View} from 'react-native';
 
 const GamesScreen = ({navigation}) => {
   const [index, setIndex] = useState<number>(0);
   const [search, setSearch] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [placeholder, setPlaceholder] = useState<string>('搜索galgame');
   const user = useSelector(selectUser);
   let gameRouters = router.GameTab;
   let tabItems = [];
@@ -32,16 +33,17 @@ const GamesScreen = ({navigation}) => {
       );
     }
   }
-
   const onIndexChange = (value: number) => {
     setIndex(value);
+    setPlaceholder('搜索' + gameRouters[value].type.name);
   };
 
   const onSubmitSearch = () => {
     setLoading(true);
+    let type = gameRouters[index].type;
     navigation.navigate('SearchGame', {
       query: search,
-      type: GameType.Galgame,
+      type: type,
     });
     setSearch('');
     setLoading(false);
@@ -53,15 +55,17 @@ const GamesScreen = ({navigation}) => {
 
   return (
     <>
-      <SearchBar
-        platform="ios"
-        placeholder="搜索"
-        cancelButtonTitle="取消"
-        showLoading={loading} // 晚点可以专门的searchLoading
-        value={search}
-        onChangeText={updateSearch}
-        onSubmitEditing={onSubmitSearch}
-      />
+      <View>
+        <SearchBar
+          platform="ios"
+          placeholder={placeholder}
+          cancelButtonTitle="取消"
+          showLoading={loading} // 晚点可以专门的searchLoading
+          value={search}
+          onChangeText={updateSearch}
+          onSubmitEditing={onSubmitSearch}
+        />
+      </View>
       <Tab value={index} onChange={onIndexChange} scrollable>
         {tabItems}
       </Tab>

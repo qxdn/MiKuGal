@@ -7,18 +7,16 @@ import logger from '../log';
 import {setLoginUser, setToken} from '../token';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 
-export const addCoin = async (options?: {[key: string]: any}) => {
-  let data = await request<API.Response<object>>(
-    '/addJf',
-    {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json,text/plain,*/*',
-      },
-      ...(options || {}),
+export const addCoin = async (options?: {
+  [key: string]: any;
+}): Promise<void> => {
+  let data = await request<object>('/addJf', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json,text/plain,*/*',
     },
-    true,
-  );
+    ...(options || {}),
+  });
   if (data.code === 0) {
     Toast.show({type: 'success', text1: '每日登陆，增加金币'});
   }
@@ -33,9 +31,9 @@ export async function getGameList(
   page: number,
   type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
-) {
+): Promise<Partial<API.PageWrapper<API.GameListItem[]>>> {
   addCoin();
-  return await request<API.PageWrapper<API.GameListItem[]>>(type.list, {
+  let data = await request<API.GameListItem[]>(type.list, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -46,6 +44,7 @@ export async function getGameList(
     },
     ...(options || {}),
   });
+  return data;
 }
 
 /**
@@ -56,8 +55,8 @@ export async function sign(
   email: string,
   password: string,
   options?: {[key: string]: any},
-) {
-  let data = await request<API.Sign>('/sign', {
+): Promise<API.Sign> {
+  let _data = await request<API.Sign>('/sign', {
     method: 'POST',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -69,15 +68,15 @@ export async function sign(
     }),
     ...(options || {}),
   });
+  let data = _data.obj;
   if (data) {
-    logger.log('set data');
     await setToken(data.token);
     await setLoginUser({
       nickname: data.nickname,
       avatar: data.ts,
       token: data.token,
       coins: data.jf,
-      vip: data.vstatus,
+      vip: !!data.vstatus,
     });
   }
   return data;
@@ -86,14 +85,17 @@ export async function sign(
 /**
  * 网站全局评论
  */
-export async function getGlobalGameComment(options?: {[key: string]: any}) {
-  return await request<API.GlobalGameComment[]>('/ggs', {
+export async function getGlobalGameComment(options?: {
+  [key: string]: any;
+}): Promise<API.GlobalGameComment[]> {
+  let data = await request<API.GlobalGameComment[]>('/ggs', {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
     },
     ...(options || {}),
   });
+  return data.obj;
 }
 
 /**
@@ -104,8 +106,8 @@ export async function getLastUpdateGamePatch(
   label: string,
   type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
-) {
-  return await request<API.LastUpdateGamePatch[]>(type.label, {
+): Promise<API.LastUpdateGamePatch[]> {
+  let data = await request<API.LastUpdateGamePatch[]>(type.label, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -115,6 +117,7 @@ export async function getLastUpdateGamePatch(
     },
     ...(options || {}),
   });
+  return data.obj;
 }
 
 /**
@@ -124,14 +127,15 @@ export async function getLastUpdateGamePatch(
 export async function getWebGameComment(
   type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
-) {
-  return await request<API.WebGameComment[]>(type.webComment, {
+): Promise<API.WebGameComment[]> {
+  let data = await request<API.WebGameComment[]>(type.webComment, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
     },
     ...(options || {}),
   });
+  return data.obj;
 }
 
 /**
@@ -142,14 +146,15 @@ export async function getWebGameComment(
 export async function getRandomGame(
   type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
-) {
-  return await request<API.RandomGame[]>(type.random, {
+): Promise<API.RandomGame[]> {
+  let data = await request<API.RandomGame[]>(type.random, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
     },
     ...(options || {}),
   });
+  return data.obj;
 }
 
 /**
@@ -160,14 +165,15 @@ export async function getRandomGame(
 export async function getTopGame(
   type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
-) {
-  return await request<API.RandomGame[]>(type.topGame, {
+): Promise<API.RandomGame[]> {
+  let data = await request<API.RandomGame[]>(type.topGame, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
     },
     ...(options || {}),
   });
+  return data.obj;
 }
 
 /**
@@ -175,14 +181,15 @@ export async function getTopGame(
  * @param options
  * @returns
  */
-export async function getVIP(options?: {[key: string]: any}) {
-  return await request<API.VIP>('/getVip', {
+export async function getVIP(options?: {[key: string]: any}): Promise<API.VIP> {
+  let data = await request<API.VIP>('/getVip', {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
     },
     ...(options || {}),
   });
+  return data.obj;
 }
 
 /**
@@ -196,8 +203,8 @@ export async function getDownloadLink(
   id: number,
   type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
-) {
-  return await request<API.OneDriveUrl>('/down', {
+): Promise<API.OneDriveUrl> {
+  let data = await request<API.OneDriveUrl>('/down', {
     method: 'POST',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -209,14 +216,15 @@ export async function getDownloadLink(
     }),
     ...(options || {}),
   });
+  return data.obj;
 }
 
 export async function getGameDetail(
   id: number,
   type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
-) {
-  return await request<API.GameDetail>(type.details, {
+): Promise<API.GameDetail> {
+  let data = await request<API.GameDetail>(type.details, {
     method: 'GET',
     headers: {
       Accept: 'application/json,text/plain,*/*',
@@ -226,6 +234,7 @@ export async function getGameDetail(
     },
     ...(options || {}),
   });
+  return data.obj;
 }
 
 /**
@@ -241,21 +250,18 @@ export async function getGameDetailComment(
   type: GameTypeEnum = GameType.Galgame,
   yema: number = 0,
   options?: {[key: string]: any},
-) {
-  return await request<API.PageWrapper<API.GameDetailComment[]>>(
-    type.detailComment,
-    {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json,text/plain,*/*',
-      },
-      params: {
-        id: id,
-        yema: yema,
-      },
-      ...(options || {}),
+): Promise<Partial<API.PageWrapper<API.GameDetailComment[]>>> {
+  return await request<API.GameDetailComment[]>(type.detailComment, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json,text/plain,*/*',
     },
-  );
+    params: {
+      id: id,
+      yema: yema,
+    },
+    ...(options || {}),
+  });
 }
 
 export async function searchGameData(
@@ -263,24 +269,20 @@ export async function searchGameData(
   page: number = 0,
   type: GameTypeEnum = GameType.Galgame,
   options?: {[key: string]: any},
-) {
+): Promise<API.Response<API.GameDetailCount[]>> {
   let s: string[] = query.split(' ');
   query = s.join('+');
-  return await request<API.Response<API.GameDetailCount[]>>(
-    type.search,
-    {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json,text/plain,*/*',
-      },
-      params: {
-        yema: page,
-        query: query,
-      },
-      ...(options || {}),
+  return await request<API.GameDetailCount[]>(type.search, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json,text/plain,*/*',
     },
-    true,
-  );
+    params: {
+      yema: page,
+      query: query,
+    },
+    ...(options || {}),
+  });
 }
 
 /**
