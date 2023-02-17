@@ -16,13 +16,6 @@ const galBoxShadow = color => {
   };
 };
 
-const dataArticleMonthDay = () => {
-  return {
-    textAlign: 'center',
-    display: 'block',
-  };
-};
-
 const styles = StyleSheet.create({
   article: {
     marginBottom: 30,

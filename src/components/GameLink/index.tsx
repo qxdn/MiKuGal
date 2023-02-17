@@ -1,13 +1,14 @@
 import {Button, Text} from '@rneui/themed';
 import React from 'react';
 import {GameLinkProps} from './typings';
-import {Platform, Linking, View} from 'react-native';
+import {View} from 'react-native';
 import {styles} from './styles';
 import {getDownloadLink} from '@src/services/api';
 import logger from '@src/services/log';
 import WebLink from '../WebLink';
 import Settings from '@src/configs/defaultSettings';
-import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import {useDispatch} from 'react-redux';
+import {showLoading} from '@src/reducers/GlobalLoadingReducer';
 
 let baseMainConfig = Settings.network.main; // 主站
 
@@ -34,23 +35,20 @@ const GameLink: React.FC<GameLinkProps> = ({
   index,
   split,
 }) => {
+  const dispatch = useDispatch();
   index = limitIndex(index);
   if (!split) {
     split = ',';
   }
   // TODO: onPress
   const onPress = async () => {
-    logger.log('request link');
+    dispatch(showLoading(true));
+    logger.debug('request link');
     const linkSrc: API.OneDriveUrl = await getDownloadLink(id, type);
     const links: string[] = linkSrc.src.split(split);
-    // TODO: navigation
-    logger.log(links[index]);
-    if (Platform.OS === 'android') {
-      WebLink.openURL(links[index], {Referer: baseMainConfig.url});
-    } else {
-      Toast.show({type: 'error', text1: 'ios跳转页面目前有问题'});
-      Linking.openURL(links[index]);
-    }
+    logger.debug(links[index]);
+    dispatch(showLoading(false));
+    WebLink.openURL(links[index], {Referer: baseMainConfig.url});
   };
 
   return (

@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import UserReducer from './UserReducer';
+import GlobalLoadingReducer from './GlobalLoadingReducer';
 
 const store = configureStore({
   reducer: {
     user: UserReducer,
+    loading: GlobalLoadingReducer,
   },
 });
 

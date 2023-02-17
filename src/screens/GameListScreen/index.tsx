@@ -63,7 +63,7 @@ const GameListsScreen: React.FunctionComponent<GameListScreenProps> = ({
   };
 
   const refreshing = () => {
-    if (0 === page) {
+    if (page === 0) {
       loadData();
     } else {
       setPage(0);

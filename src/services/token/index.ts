@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import logger from '../log';
+import CookieManager from '@react-native-cookies/cookies';
 
 const TOKEN_EXPIRED_KEY = 'expiredTime';
 const JWT_TOKEN = 'jwt';
@@ -78,7 +79,7 @@ export const setCookieExpireTime = async (cookies: string[]) => {
     }
   }
   if (cookieObj) {
-    await AsyncStorage.setItem(TOKEN_EXPIRED_KEY, cookieObj['Expires']);
+    await AsyncStorage.setItem(TOKEN_EXPIRED_KEY, cookieObj.Expires);
   }
 };
 
@@ -104,4 +105,5 @@ export const getLoginUser = async (): Promise<LoginUserState | null> => {
 
 export const clearLoginUser = async () => {
   await AsyncStorage.multiRemove([JWT_TOKEN, LOGIN_USER]);
+  await CookieManager.clearAll();
 };

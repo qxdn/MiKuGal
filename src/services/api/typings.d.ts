@@ -22,7 +22,7 @@ declare namespace API {
   type Sign = {
     token: string; // X-Auth-Token
     nickname: string; // 昵称
-    vstatus: number; // vip status 
+    vstatus: number; // vip status
     qs: number; // 不知道是什么 可能是指过了两个月
     ts: string; // 头像路径 不含只有文件名
     jf: number; // 这个应该是指硬币

@@ -4,7 +4,7 @@ import GameType from '@src/enums/gametype';
 import {Md5} from 'ts-md5';
 import qs from 'qs';
 import logger from '../log';
-import {getToken, setLoginUser, setToken} from '../token';
+import {setLoginUser, setToken} from '../token';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 
 export const addCoin = async (options?: {[key: string]: any}) => {
@@ -19,7 +19,7 @@ export const addCoin = async (options?: {[key: string]: any}) => {
     },
     true,
   );
-  if (0 === data.code) {
+  if (data.code === 0) {
     Toast.show({type: 'success', text1: '每日登陆，增加金币'});
   }
   return;
@@ -77,6 +77,7 @@ export async function sign(
       avatar: data.ts,
       token: data.token,
       coins: data.jf,
+      vip: data.vstatus,
     });
   }
   return data;

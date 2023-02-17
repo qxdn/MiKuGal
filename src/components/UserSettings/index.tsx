@@ -1,13 +1,11 @@
-import {Avatar, Button, Card} from '@rneui/themed';
-import {selectUser} from '@src/reducers/UserReducer';
+import {Avatar, Badge, Button, Card} from '@rneui/themed';
+import {selectUser, logout} from '@src/reducers/UserReducer';
 import {getAvatarUrl} from '@src/services/api';
 import React from 'react';
 import {ScrollView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {logout} from '@src/reducers/UserReducer';
 import {clearLoginUser} from '@src/services/token';
 import logger from '@src/services/log';
-import CookieManager from '@react-native-cookies/cookies';
 
 const UserSettings: React.FC = () => {
   const user = useSelector(selectUser);
@@ -16,7 +14,6 @@ const UserSettings: React.FC = () => {
   const userLogOut = async () => {
     // 清理token和登陆状态
     await clearLoginUser();
-    await CookieManager.clearAll();
     // logout
     dispatch(logout());
   };
@@ -32,12 +29,14 @@ const UserSettings: React.FC = () => {
               size={70}
             />
           </View>
-          <View>
-            <Card.Title>
-              {user.nickname}
-              {user.vip && user.vip}
-            </Card.Title>
-            <Card.Title>{'硬币:' + user.coins}</Card.Title>
+          <View style={{alignItems: 'flex-start'}}>
+            <View style={{flexDirection: 'row'}}>
+              <Card.Title>{user.nickname}</Card.Title>
+              {user.vip && <Badge value="VIP" />}
+            </View>
+            <View>
+              <Card.Title>{'硬币:' + user.coins}</Card.Title>
+            </View>
           </View>
         </View>
         <Button color="error" onPress={userLogOut}>
