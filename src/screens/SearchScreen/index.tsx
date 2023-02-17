@@ -79,6 +79,7 @@ const SearchScreen: React.FC = ({route, navigation}) => {
     <View>
       <GameLists
         data={gameList}
+        gameType={type}
         refreshing={loading}
         onRefresh={refreshing}
         onEndReached={listEndReach}

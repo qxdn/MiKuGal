@@ -67,6 +67,7 @@ const GameListsScreen: React.FunctionComponent<GameListScreenProps> = ({
     <View>
       <GameLists
         data={gameList}
+        gameType={gameType}
         refreshing={loading}
         onRefresh={refreshing}
         onEndReached={listEndReach}
