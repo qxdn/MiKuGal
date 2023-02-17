@@ -4,6 +4,7 @@ declare namespace API {
     msg: string;
     obj: T;
     wrap?: number; // obj为list时服务器总含量
+    sj?: string; // 'sj' 当搜索无结果时会返回随机
   };
   type PageWrapper<T> = {
     obj: T;
@@ -104,7 +105,7 @@ declare namespace API {
     baidu_src: string; // null 可能购买后会变
     other_src: string; // null
     other_pwd: string; // null
-    isvip: boolean;
+    isvip?: boolean; // 游戏详情里有vip，而搜索时没有
   };
 
   type GameDetail = {

@@ -1,4 +1,3 @@
-import logger from '@src/services/log';
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import GameListItem from '@components/GameListItem';

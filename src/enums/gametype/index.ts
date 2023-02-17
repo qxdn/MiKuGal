@@ -13,6 +13,7 @@ const GameType = {
     details: '/details',
     downloadType: 'game',
     detailComment: '/gamebook',
+    search: '/so',
   }),
   KrKr: gameType({
     list: '/krkrGameLists',
@@ -24,6 +25,7 @@ const GameType = {
     details: '/krkrDetails',
     downloadType: 'krkr',
     detailComment: '/krkrGamebook',
+    search: '/krkrSo',
   }),
   RPG: gameType({
     list: '/rpgGameLists',
@@ -35,6 +37,7 @@ const GameType = {
     details: '/rpgDetails',
     downloadType: 'sstm',
     detailComment: '/rpgGamebook',
+    search: '/rpgSo',
   }),
   VR: gameType({
     list: '/vrLists',
@@ -46,6 +49,7 @@ const GameType = {
     details: '/vrDetails',
     downloadType: 'vr',
     detailComment: 'vrGamebook',
+    search: '/vrSo',
   }),
   EX: gameType({
     list: '/exLists',
@@ -57,6 +61,7 @@ const GameType = {
     details: '/vrDetails',
     downloadType: 'ex',
     detailComment: '/exGamebook',
+    search: '/exSo',
   }),
   Book: gameType({
     list: '/bookLists',
@@ -68,6 +73,7 @@ const GameType = {
     details: '/bookDetails',
     downloadType: 'book',
     detailComment: '/bookGamebook',
+    search: '/bookSo',
   }),
 } as const;
 

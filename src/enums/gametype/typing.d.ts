@@ -8,6 +8,7 @@ interface GameTypeEnum {
   readonly details: string; // 游戏详情
   readonly downloadType: string; //下载类型
   readonly detailComment: string; // 游戏评论
+  readonly search: string; // 搜索
 }
 
 type gameTypeProps = {
@@ -20,4 +21,5 @@ type gameTypeProps = {
   details: string; // 游戏详情
   downloadType: string; //下载类型
   detailComment: string; // 游戏评论
+  search: string; // 搜索
 };

@@ -258,6 +258,25 @@ export async function getGameDetailComment(
   );
 }
 
+export async function searchGameData(
+  query: string,
+  type: GameTypeEnum = GameType.Galgame,
+  options?: {[key: string]: any},
+) {
+  let s: string[] = query.split(' ');
+  query = s.join('+');
+  return await request<API.Response<API.GameDetailCount[]>>(type.search, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json,text/plain,*/*',
+    },
+    params: {
+      query: query,
+    },
+    ...(options || {}),
+  });
+}
+
 /**
  * 图片url转换
  * @param path
