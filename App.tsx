@@ -12,6 +12,7 @@ import {Provider, useSelector} from 'react-redux';
 import store from '@src/reducers/store';
 import {selectLoading} from '@src/reducers/GlobalLoadingReducer';
 import Spinner from 'react-native-loading-spinner-overlay/lib';
+import SearchScreen from '@src/screens/SearchScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ function App(): JSX.Element {
                 options={{headerShown: false}}
               />
               <Stack.Screen name="GameDetail" component={GameDetailScreen} />
+              <Stack.Screen name="SearchGame" component={SearchScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaView>
