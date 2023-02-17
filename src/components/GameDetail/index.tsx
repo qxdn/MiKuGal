@@ -1,16 +1,24 @@
-import {Card, Text} from '@rneui/themed';
+/* eslint-disable react-native/no-inline-styles */
+import {Card, Image, Text} from '@rneui/themed';
 import {
   getGameDetail,
   getGameDetailComment,
   getImageUrl,
 } from '@src/services/api';
 import React, {useEffect, useState} from 'react';
-import {Modal, ScrollView, View, useWindowDimensions} from 'react-native';
+import {
+  ImageBackground,
+  Modal,
+  ScrollView,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import GameLabel from '@components/GameLabel';
 import Note from '@components/Note';
 import RenderHTML from 'react-native-render-html';
 import GameLink from '@components/GameLink';
+import {bg} from '@src/asserts';
 
 /**
  * 游戏详情页面
@@ -58,14 +66,15 @@ const GameDetail: React.FunctionComponent<GameDetailProps> = ({id, type}) => {
     for (let index in detail?.img) {
       let img = detail.img[index];
       imgs.push(
-        <Card.Image
+        <Image
+          resizeMode="contain"
           source={{uri: getImageUrl(img.img_url)}}
           onPress={() => {
             setImageViewIndex(Number.parseInt(index, 10));
             setShowModal(true);
           }}
           key={img.img_id}
-          style={{marginVertical: '5%'}}
+          style={{aspectRatio: 1, width: '100%', flex: 1, marginVertical: '4%'}}
         />,
       );
     }
@@ -82,47 +91,57 @@ const GameDetail: React.FunctionComponent<GameDetailProps> = ({id, type}) => {
     );
   }
   return (
-    <ScrollView>
-      <Card>
-        <Card.Title h4 style={{textAlign: 'center'}}>
-          {detail?.count.game_name}
-        </Card.Title>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            marginBottom: '5%',
-          }}>
-          <GameLabel text={detail?.count.game_create_time} icon={'calendar'} />
-          <GameLabel text={detail?.count.game_count} iconName="eye" />
-        </View>
-        <Card.Divider />
-        <Note type="info" title={'游戏截图'} />
-        {getImageCardItem()}
-        <Modal visible={showModal} transparent={true}>
-          <ImageViewer
-            imageUrls={getImageViewUrls()}
-            index={imageViewIndex}
-            onClick={() => {
-              setShowModal(false);
-            }}
+    <ScrollView style={{flex: 1}}>
+      <ImageBackground
+        source={bg}
+        resizeMode="repeat"
+        style={{
+          flex: 1,
+        }}>
+        <Card>
+          <Card.Title h4 style={{textAlign: 'center'}}>
+            {detail?.count.game_name}
+          </Card.Title>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              marginBottom: '5%',
+            }}>
+            <GameLabel
+              text={detail?.count.game_create_time}
+              icon={'calendar'}
+            />
+            <GameLabel text={detail?.count.game_count} iconName="eye" />
+          </View>
+          <Card.Divider />
+          <Note type="info" title={'游戏截图'} />
+          {getImageCardItem()}
+          <Modal visible={showModal} transparent={true}>
+            <ImageViewer
+              imageUrls={getImageViewUrls()}
+              index={imageViewIndex}
+              onClick={() => {
+                setShowModal(false);
+              }}
+            />
+          </Modal>
+          <Note type="success" icon="lightbulb" title={'游戏介绍'}>
+            <RenderHTML
+              contentWidth={width}
+              source={{html: detail?.count.game_introduce}}
+            />
+          </Note>
+          <Card.Divider />
+          <GameLink
+            title="Onedrive链接"
+            id={id}
+            type={type}
+            note={detail?.count.game_beizhu}
+            split={detail?.count.game_pwd}
           />
-        </Modal>
-        <Note type="success" icon="lightbulb" title={'游戏介绍'}>
-          <RenderHTML
-            contentWidth={width}
-            source={{html: detail?.count.game_introduce}}
-          />
-        </Note>
-        <Card.Divider />
-        <GameLink
-          title="Onedrive链接"
-          id={id}
-          type={type}
-          note={detail?.count.game_beizhu}
-          split={detail?.count.game_pwd}
-        />
-      </Card>
+        </Card>
+      </ImageBackground>
     </ScrollView>
   );
 };

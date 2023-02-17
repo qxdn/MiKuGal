@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     marginTop: '-8%',
-    marginBottom: '-4%',
+    marginBottom: '4%',
   },
 });
 

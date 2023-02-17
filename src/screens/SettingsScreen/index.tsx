@@ -8,15 +8,15 @@ import UserSettings from '@src/components/UserSettings';
 const SettingsScreen = () => {
   const user = useSelector(selectUser);
 
-  if (!user.isLogin) {
-    return <LoginForm />;
-  } else {
-    return (
-      <View>
-        <UserSettings />
-      </View>
-    );
-  }
+  const showSetting = () => {
+    if (user.isLogin) {
+      return <UserSettings />;
+    } else {
+      return <LoginForm />;
+    }
+  };
+
+  return <View>{showSetting()}</View>;
 };
 
 export default SettingsScreen;

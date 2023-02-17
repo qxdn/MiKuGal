@@ -6,6 +6,7 @@ import qs from 'qs';
 import logger from '../log';
 import {setLoginUser, setToken} from '../token';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import {id2name} from '@src/enums/gamelabels';
 
 export const addCoin = async (options?: {
   [key: string]: any;
@@ -268,6 +269,7 @@ export async function searchGameData(
   query: string,
   page: number = 0,
   type: GameTypeEnum = GameType.Galgame,
+  label?: number,
   options?: {[key: string]: any},
 ): Promise<API.Response<API.GameDetailCount[]>> {
   let s: string[] = query.split(' ');
@@ -280,6 +282,7 @@ export async function searchGameData(
     params: {
       yema: page,
       query: query,
+      label: label,
     },
     ...(options || {}),
   });
@@ -311,16 +314,7 @@ export function getAvatarUrl(path: string): string {
  * @returns
  */
 export function singleGameLabelConvert(raw: string): string {
-  // TODO: 补全
-  let label = raw;
-  switch (parseInt(raw, 10)) {
-    case 28:
-      label = '重口';
-      break;
-    default:
-      break;
-  }
-  return label;
+  return id2name(parseInt(raw, 10));
 }
 
 /**

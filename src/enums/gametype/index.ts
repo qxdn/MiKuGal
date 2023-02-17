@@ -67,7 +67,7 @@ const GameType = {
     update: '/exUpdatagame',
     random: '/exRandgame',
     topGame: '/exTopgame',
-    details: '/vrDetails',
+    details: '/exDetails',
     downloadType: 'ex',
     detailComment: '/exGamebook',
     search: '/exSo',
@@ -88,14 +88,5 @@ const GameType = {
     vip: true,
   }),
 } as const;
-
-export const AllGameTypes = [
-  GameType.Galgame,
-  GameType.KrKr,
-  GameType.RPG,
-  GameType.VR,
-  GameType.EX,
-  GameType.Book,
-];
 
 export default GameType;

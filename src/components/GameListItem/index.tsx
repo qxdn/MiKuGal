@@ -43,9 +43,9 @@ const GameListItem: React.FunctionComponent<GameListItemProps> = ({
         </View>
         <View style={styles.articleContainer}>
           <ListItem.Title style={{marginTop: 40, textAlign: 'center'}}>
-            <Card.Title h4 style={[styles.articleTitle]}>
+            <Text h4 style={[styles.articleTitle]}>
               {data.game_name}
-            </Card.Title>
+            </Text>
           </ListItem.Title>
           <View
             style={{
