@@ -35,6 +35,9 @@ const getRequestMethod = () => {
   return baseMainInstance;
 };
 
+// 0 正常 10 登陆后请求金币 119前请求金币
+const ignoreCode = [0, 10, 119];
+
 const request = async <T = any>(
   url: string,
   options?: {[key: string]: any},
@@ -55,7 +58,7 @@ const request = async <T = any>(
   if (data.code === 5) {
     // code=5 大概率是这个，主要为福利区、本子区、轻小说区等位置
     logger.debug('未登录');
-  } else if (data.code !== 0 && data.code !== 10) {
+  } else if (!ignoreCode.includes(data.code)) {
     Toast.show({type: 'error', text1: '请求数据失败', text2: data.msg});
   }
   return data;
