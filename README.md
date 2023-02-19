@@ -3,7 +3,7 @@
 
 
 # TODO
-- [ ] 打包发布，最好是github action
+- [x] 打包发布，最好是github action
 - [x] 换android app icon
 - [ ] 换ios app icon
 - [ ] 主题色
